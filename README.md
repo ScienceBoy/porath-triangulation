@@ -1,4 +1,4 @@
-How to recursively subdivide and triangulate a plane convex area, which is defined by a number of points
+How to recursively subdivide and triangulate a flat convex area, which is defined by a number of points
 ========================================================================================================
 
 There are known algorithms available to subdivide and to triangulate areas defined by polygons or points. There implementation is often complex and their execution cost expensive. For the case of flat convex areas, we demonstrate here a simple fast recursive algorithm, which avoids overlapping of triangles and can easily be implemented in any programming language.
