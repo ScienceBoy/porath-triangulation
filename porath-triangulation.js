@@ -285,45 +285,46 @@
             }
 
             // Main program, starting by defining the number of points and the recursion depth
-            var NumberOfPoints = 5;
-            var Depth = 2;
-            var points = [];
-
+            var NumberOfPoints = 15;
+            var Depth = 3;
             var triangles = [];
 
-            // Call function to create the random points, to create the triangles and to draw the triangles
-            points = CreatePoints(NumberOfPoints);
-            createTriangles(points);
-            drawTriangles();
-
-            // For each triangles, recursively repeat the creation of sub-triangles
+            // Repeat steps for each depth level
             for (b = 0; b < Depth; b++) {
                 var points = [];
-                var NumberOfTriangles = triangles.length;
-                var TrianglesToRemove = [];
-                // Create a new set of points from triangle corners and create sub-triangles with this set of points
-                for (x15 = 0; x15 < NumberOfTriangles; x15++) {
-                    var pointlist = [];
-                    pointlist.push({
-                        x: triangles[x15].P1x,
-                        y: triangles[x15].P1y,
-                    });
-                    pointlist.push({
-                        x: triangles[x15].P2x,
-                        y: triangles[x15].P2y,
-                    });
-                    pointlist.push({
-                        x: triangles[x15].P3x,
-                        y: triangles[x15].P3y,
-                    });
-                    createTriangles(pointlist);
+                // Call function to create the random points, to create the triangles and to draw the triangles
+                if (b == 0) {
+                    points = CreatePoints(NumberOfPoints);
+                    createTriangles(points);
                     drawTriangles();
-                    // Prepare the original triangle for removal
-                    TrianglesToRemove.push(triangles[x15].ID);
-                }
-                // Remove all previous recursion-level triangles
-                for (x17 = 0; x17 < TrianglesToRemove.length; x17++) {
-                    triangles.splice(TrianglesToRemove[x17], 1);
+                } else {
+                    // For each triangles, recursively repeat the creation of sub-triangles
+                    var NumberOfTriangles = triangles.length;
+                    var TrianglesToRemove = [];
+                    // Create a new set of points from triangle corners and create sub-triangles with this set of points
+                    for (x15 = 0; x15 < NumberOfTriangles; x15++) {
+                        var pointlist = [];
+                        pointlist.push({
+                            x: triangles[x15].P1x,
+                            y: triangles[x15].P1y,
+                        });
+                        pointlist.push({
+                            x: triangles[x15].P2x,
+                            y: triangles[x15].P2y,
+                        });
+                        pointlist.push({
+                            x: triangles[x15].P3x,
+                            y: triangles[x15].P3y,
+                        });
+                        createTriangles(pointlist);
+                        drawTriangles();
+                        // Prepare the original triangle for removal
+                        TrianglesToRemove.push(triangles[x15].ID);
+                    }
+                    // Remove all previous recursion-level triangles
+                    for (x17 = 0; x17 < TrianglesToRemove.length; x17++) {
+                        triangles.splice(TrianglesToRemove[x17], 1);
+                    }
                 }
                 drawText(
                     20,
