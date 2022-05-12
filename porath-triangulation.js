@@ -183,79 +183,56 @@
                 CentralPoint_x = sum_x / pointsHere.length;
                 CentralPoint_y = sum_y / pointsHere.length;
 
-                // Calculate the angles for each point and repeat if two angles are equal
-                do {
-                    TwoEqual = false;
+                // Calculate the angles for each point
+                for (x4 = 0; x4 < pointsHere.length; x4++) {
+                    var Hypothenuse = Distance(
+                        pointsHere[x4].x,
+                        pointsHere[x4].y,
+                        CentralPoint_x,
+                        CentralPoint_y
+                    );
 
-                    // Calculate the angles for each point
-                    for (x4 = 0; x4 < pointsHere.length; x4++) {
-                        var Hypothenuse = Distance(
-                            pointsHere[x4].x,
-                            pointsHere[x4].y,
-                            CentralPoint_x,
-                            CentralPoint_y
-                        );
+                    var AdjacentSide = Math.abs(
+                        pointsHere[x4].x - CentralPoint_x
+                    );
 
-                        var AdjacentSide = Math.abs(
-                            pointsHere[x4].x - CentralPoint_x
-                        );
+                    if (
+                        pointsHere[x4].x > CentralPoint_x &&
+                        pointsHere[x4].y > CentralPoint_y
+                    )
+                        AngleToCentralPoint[x4] =
+                            Math.asin(AdjacentSide / Hypothenuse) +
+                            Math.PI / 2 +
+                            Math.PI;
 
-                        if (
-                            pointsHere[x4].x > CentralPoint_x &&
-                            pointsHere[x4].y > CentralPoint_y
-                        )
-                            AngleToCentralPoint[x4] =
-                                Math.asin(AdjacentSide / Hypothenuse) +
-                                Math.PI / 2 +
-                                Math.PI;
+                    if (
+                        pointsHere[x4].x < CentralPoint_x &&
+                        pointsHere[x4].y > CentralPoint_y
+                    )
+                        AngleToCentralPoint[x4] =
+                            -Math.asin(-AdjacentSide / -Hypothenuse) +
+                            Math.PI +
+                            Math.PI / 2;
 
-                        if (
-                            pointsHere[x4].x < CentralPoint_x &&
-                            pointsHere[x4].y > CentralPoint_y
-                        )
-                            AngleToCentralPoint[x4] =
-                                -Math.asin(-AdjacentSide / -Hypothenuse) +
-                                Math.PI +
-                                Math.PI / 2;
+                    if (
+                        pointsHere[x4].x < CentralPoint_x &&
+                        pointsHere[x4].y < CentralPoint_y
+                    )
+                        AngleToCentralPoint[x4] =
+                            Math.asin(-AdjacentSide / -Hypothenuse) +
+                            Math.PI / 2;
 
-                        if (
-                            pointsHere[x4].x < CentralPoint_x &&
-                            pointsHere[x4].y < CentralPoint_y
-                        )
-                            AngleToCentralPoint[x4] =
-                                Math.asin(-AdjacentSide / -Hypothenuse) +
-                                Math.PI / 2;
+                    if (
+                        pointsHere[x4].x > CentralPoint_x &&
+                        pointsHere[x4].y < CentralPoint_y
+                    )
+                        AngleToCentralPoint[x4] =
+                            Math.PI / 2 - Math.asin(AdjacentSide / Hypothenuse);
+                }
 
-                        if (
-                            pointsHere[x4].x > CentralPoint_x &&
-                            pointsHere[x4].y < CentralPoint_y
-                        )
-                            AngleToCentralPoint[x4] =
-                                Math.PI / 2 -
-                                Math.asin(AdjacentSide / Hypothenuse);
-                    }
-
-                    // Check if two angles are equal and if yes, move the central point randomly by a small amount
-                    for (x16 = 0; x16 < pointsHere.length; x16++) {
-                        for (x17 = 0; x17 < pointsHere.length; x17++) {
-                            if (
-                                x16 != x17 &&
-                                AngleToCentralPoint[x16] ==
-                                    AngleToCentralPoint[x17]
-                            ) {
-                                console.log(
-                                    AngleToCentralPoint[x16] ==
-                                        AngleToCentralPoint[x17]
-                                );
-                                TwoEqual = true;
-                                CentralPoint_x =
-                                    CentralPoint_x * (Math.random() / 100 + 1);
-                                CentralPoint_y =
-                                    CentralPoint_y * (Math.random() / 100 + 1);
-                            }
-                        }
-                    }
-                } while (TwoEqual != false);
+                // Move the central point by a fraction of 1, to avoid two equal angles
+                CentralPoint_x = CentralPoint_x * (Math.random() / 100 + 1);
+                CentralPoint_y = CentralPoint_y * (Math.random() / 100 + 1);
 
                 // Call the sorting function to receive an ordered index list in the array OrderIndex
                 SortAngles(AngleToCentralPoint, OrderIndex);
@@ -285,51 +262,62 @@
             }
 
             // Main program, starting by defining the number of points and the recursion depth
-            var NumberOfPoints = 15;
-            var Depth = 3;
+            var NumberOfPoints = 10;
+            var Depth = 10;
             var triangles = [];
 
             // Repeat steps for each depth level
-            for (b = 0; b < Depth; b++) {
+            for (depthLevel = 0; depthLevel < Depth; depthLevel++) {
                 var points = [];
                 // Call function to create the random points, to create the triangles and to draw the triangles
-                if (b == 0) {
+                // Starting with depth level 0
+                if (depthLevel == 0) {
                     points = CreatePoints(NumberOfPoints);
                     createTriangles(points);
                     drawTriangles();
-                } else {
-                    // For each triangles, recursively repeat the creation of sub-triangles
+                }
+                // Continuing with depth level 1...depth-1
+                // For each triangles, recursively repeat the creation of sub-triangles
+                else {
                     var NumberOfTriangles = triangles.length;
-                    var TrianglesToRemove = [];
                     // Create a new set of points from triangle corners and create sub-triangles with this set of points
-                    for (x15 = 0; x15 < NumberOfTriangles; x15++) {
-                        var pointlist = [];
-                        pointlist.push({
-                            x: triangles[x15].P1x,
-                            y: triangles[x15].P1y,
+                    for (
+                        NewTriangle = 0;
+                        NewTriangle < NumberOfTriangles;
+                        NewTriangle++
+                    ) {
+                        points = [];
+                        points.push({
+                            x: triangles[NewTriangle].P1x,
+                            y: triangles[NewTriangle].P1y,
                         });
-                        pointlist.push({
-                            x: triangles[x15].P2x,
-                            y: triangles[x15].P2y,
+                        points.push({
+                            x: triangles[NewTriangle].P2x,
+                            y: triangles[NewTriangle].P2y,
                         });
-                        pointlist.push({
-                            x: triangles[x15].P3x,
-                            y: triangles[x15].P3y,
+                        points.push({
+                            x: triangles[NewTriangle].P3x,
+                            y: triangles[NewTriangle].P3y,
                         });
-                        createTriangles(pointlist);
+                        createTriangles(points);
                         drawTriangles();
-                        // Prepare the original triangle for removal
-                        TrianglesToRemove.push(triangles[x15].ID);
                     }
-                    // Remove all previous recursion-level triangles
-                    for (x17 = 0; x17 < TrianglesToRemove.length; x17++) {
-                        triangles.splice(TrianglesToRemove[x17], 1);
+                    // Remove parent triangle
+                    for (
+                        TriangleToDelete = NumberOfTriangles - 1;
+                        TriangleToDelete >= 0;
+                        TriangleToDelete--
+                    ) {
+                        triangles.splice(TriangleToDelete, 1);
                     }
                 }
                 drawText(
                     20,
-                    b * 20 + 20,
-                    "Number of Triangles: " + triangles.length,
+                    depthLevel * 20 + 20,
+                    "Number of Triangles after recursion " +
+                        depthLevel +
+                        ": " +
+                        triangles.length,
                     DrawingContext,
                     "#000000",
                     "Left"
