@@ -1,6 +1,6 @@
-<!-- Delaunay-Flipping API -->
-<!-- Ron Porath, 2022 -->
-<!-- License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) -->
+// Delaunay-Flipping API
+// Ron Porath, 2022
+// License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
 
 var NumberOfPoints = 0;
 var NumberOfTriangles = 0;
