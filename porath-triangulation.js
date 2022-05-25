@@ -1,3 +1,7 @@
+<!-- Triangulation implementation -->
+<!-- Ron Porath, 2022 -->
+<!-- License: CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) -->
+
 <!DOCTYPE html>
 <html>
     <head>
