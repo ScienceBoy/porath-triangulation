@@ -57,7 +57,10 @@ Figure 6: Second recursion level applied. Each triangle was divided into 3 new t
 
 Figure 7: Third recursion level applied. Each triangle was divided into 3 new triangles, which were divided into another 3 triangles
 
- 
+
+Remark
+------
+After the triangulation, the Delauney-Flipping can be applied to increase and therefore improve the angles of the triangles. One file in this repository shows how to call the Delaunay-Flipping API.
 
 References
 ----------
