@@ -6,8 +6,13 @@ There are known algorithms available to subdivide and to triangulate areas defin
 Introduction
 ------------
 3d objects are often used in CAD (Computer Added Design), Computer Graphics, Anima-tions as well as Finite Element methods (FEM). 
-	For describing, visualizing and editing of 3d objects their surfaces need to be subdi-vided in order to have small flat areas. There are known algorithms available to subdivide surfaces into areas and polygons (e.g. [Loo87]) and to triangulate surfaces (e.g. [Del34]). 
-	Often, a surface is a flat convex area, i.e. it does not show an indent and therefore it contains the whole line segment of two points of this area, as depicted in the follow-ing Fig. 1. 
+	For describing, visualizing and editing of 3d objects their surfaces need to be subdivided in order to have small flat areas. There are known algorithms available to subdivide surfaces into areas and polygons, e.g. [Loo87]) and to triangulate surfaces (e.g. [Del34]). A simple way is just to connect each vertex to each other vertex or in a way of "zig-zag" as described short in [SCO]
+
+![image](https://user-images.githubusercontent.com/101653815/170857572-cdfef5dc-f6fc-4611-8170-50515aa7dc35.png)
+
+(Image from [SCO])
+
+Often, a surface is a flat convex area, i.e. it does not show an indent and therefore it contains the whole line segment of two points of this area, as depicted in the follow-ing Fig. 1. 
 
 ![grafik](https://user-images.githubusercontent.com/101653815/167586316-15c439a0-9b28-48b7-88e4-b728bbba7629.png)
 
@@ -64,6 +69,13 @@ After the triangulation, the Delauney-Flipping can be applied to increase and th
 
 References
 ----------
-[Loo87] Charles Loop: Smooth Subdivision Surfaces Based on Triangles, M.S. Mathematics thesis, University of Utah, 1987
+[Loo87] Charles Loop: Smooth Subdivision Surfaces Based on Triangles, M.S. Mathematics thesis, University of Utah, 1987, https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/thesis-10.pdf
 
 [Del34] Boris N. Delaunay: Sur la sphère vide. In: Bulletin of Academy of Sciences. 7, Nr. 6, 1934, S. 793–800
+
+[SZO] Manual for Scotty3D, https://cmu-graphics.github.io/Scotty3D/meshedit/global/triangulate
+
+
+Very good overview article on triangulating 3d polygons
+-------------------------------------------------------
+[Zou13] Ming Zou, Tao Ju, Nathan Can: An algorithm for triangulating multiple 3D polygons, Eurographics Symposium on Geometry Processing 2013, Volume 32 (2013), Number 5. https://www.cs.wustl.edu/~taoju/research/triangulate_final.pdf
